@@ -1,0 +1,18 @@
+---
+import Mark from './Mark.astro';
+import { t, type Lang } from '../i18n/strings';
+const { lang } = Astro.props as { lang: Lang };
+const s = t[lang];
+---
+<section class="hero" aria-label={s.name}>
+  <svg class="contours" id="contours" aria-hidden="true"></svg>
+  <div class="bigmark" id="bigmark"><Mark split /></div>
+  <div class="port" id="port">
+    <img id="photo" src="/img/moe.webp" alt={s.name} width="1122" height="1561" fetchpriority="high" />
+    <canvas id="lens" aria-hidden="true"></canvas>
+  </div>
+  <div class="badge" data-hero><b dir="ltr">14+</b><span>{s.years}</span></div>
+  <div class="scrolldn" data-hero aria-hidden="true">{lang === 'ar' ? 'انزل' : 'Scroll'}</div>
+  <div class="hero-l" data-hero><b>{s.name}</b><span>{s.role}</span></div>
+  <div class="hero-r" data-hero><span class="hint"><i></i><span>{s.hint}</span></span><span>{s.hint2}</span></div>
+</section>

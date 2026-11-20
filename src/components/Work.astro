@@ -1,0 +1,25 @@
+---
+import { t, type Lang } from '../i18n/strings';
+import { work } from '../data/work';
+const { lang } = Astro.props as { lang: Lang };
+const s = t[lang];
+---
+<section class="work in" id="work" aria-labelledby="wk">
+  <div class="headrow" data-rise><h2 id="wk">{s.work}<sup>({work.length})</sup></h2><span>{s.workSub}</span></div>
+  <ul class="idx">
+    {work.map((w, i) => {
+      const ext = w.href?.startsWith('http');
+      return (
+        <li class="row" data-row>
+          <a href={w.href ?? '#contact'} target={ext ? '_blank' : undefined} rel={ext ? 'noopener' : undefined}
+             data-name={w.name[lang]} data-tag={w.tag[lang]} data-bg={w.bg} data-fg={w.fg}>
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <span class="nm">{w.name[lang]}{w.nda && <span class="nda">{s.nda}</span>}</span>
+            <span class="tg"><b>{w.tag[lang]}</b>{w.desc[lang]}</span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+<div class="peek" id="peek" aria-hidden="true"><div class="card"><span class="grid"></span><small id="peekS"></small><b id="peekT"></b><i></i></div></div>

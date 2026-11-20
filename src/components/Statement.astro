@@ -1,0 +1,19 @@
+---
+import { t, type Lang } from '../i18n/strings';
+const { lang } = Astro.props as { lang: Lang };
+const s = t[lang];
+const words = lang === 'ar'
+  ? ['هويات', 'منتجات', 'أنظمة تصميم', 'مواقع', 'لوحات قيادة', 'تدريب فرق']
+  : ['Brand identity', 'Product design', 'Design systems', 'Websites', 'Dashboards', 'Team training'];
+---
+<section class="st in" aria-label={s.stBig.join(' ')}>
+  <p class="small" data-rise>{s.stSmall}</p>
+  <h1 class="mono" id="mono">
+    {s.stBig.map((w, i) => <span class="ln"><span class:list={[{ b: i === s.stBig.length - 1 }]}>{w}</span></span>)}
+  </h1>
+</section>
+<div class="marq" aria-hidden="true">
+  <div class="tr" id="marq">
+    {[0, 1].map(() => words.map((w) => <span class:list={[{ ar: lang === 'ar' }]}>{w}</span>))}
+  </div>
+</div>

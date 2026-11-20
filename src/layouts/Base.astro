@@ -1,0 +1,32 @@
+---
+import '@fontsource-variable/archivo/standard.css';
+import '@fontsource-variable/alexandria';
+import '../styles/global.css';
+import { t, type Lang } from '../i18n/strings';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t[lang];
+const other: Lang = lang === 'en' ? 'ar' : 'en';
+const canonical = new URL(`/${lang}/`, Astro.site);
+---
+<!doctype html>
+<html lang={lang} dir={s.dir}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{s.title}</title>
+  <meta name="description" content={s.description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang={other} href={new URL(`/${other}/`, Astro.site)} />
+  <link rel="alternate" hreflang={lang} href={canonical} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" as="image" href="/img/moe.webp" />
+  <meta property="og:title" content={s.title} />
+  <meta property="og:description" content={s.description} />
+  <meta property="og:url" content={canonical} />
+  <meta name="theme-color" content="#F2F1EC" />
+</head>
+<body>
+  <slot />
+</body>
+</html>

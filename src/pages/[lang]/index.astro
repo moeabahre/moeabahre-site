@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import Statement from '../../components/Statement.astro';
+import Work from '../../components/Work.astro';
+import About from '../../components/About.astro';
+import Contact from '../../components/Contact.astro';
+import Mark from '../../components/Mark.astro';
+import { langs, type Lang } from '../../i18n/strings';
+export function getStaticPaths() { return langs.map((lang) => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang}>
+  <div class="pre" id="pre" aria-hidden="true"><div class="pm"><Mark split /></div><span class="cnt" id="cnt">0</span></div>
+  <div class="cur" id="cur" aria-hidden="true"></div>
+  <Header lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <Statement lang={lang} />
+    <Work lang={lang} />
+    <About lang={lang} />
+    <Contact lang={lang} />
+  </main>
+  <script>import '../../scripts/main.ts';</script>
+</Base>

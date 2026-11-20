@@ -1,0 +1,13 @@
+---
+import Mark from './Mark.astro';
+import { t, type Lang } from '../i18n/strings';
+const { lang } = Astro.props as { lang: Lang };
+const s = t[lang];
+const other = lang === 'en' ? 'ar' : 'en';
+---
+<header class="top in" id="topbar">
+  <a class="home" href={`/${lang}/`} aria-label="moe."><Mark class="mk" /></a>
+  <span class="sp"></span>
+  <a class="pill ghost" href={`/${other}/`} hreflang={other} lang={other} data-cur>{s.switchTo}</a>
+  <a class="pill" href="#contact" data-cur><i class="sq"></i><span>{s.talk}</span></a>
+</header>
