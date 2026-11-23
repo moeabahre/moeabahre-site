@@ -12,8 +12,14 @@ const root = document.documentElement;
 /* the Figma frame is 1440 wide; one design pixel = viewport width / 1440 (without the scrollbar) */
 const desk = matchMedia('(min-width: 901px)');
 function setUnit() {
-  if (desk.matches) root.style.setProperty('--u', `${Math.min(root.clientWidth / 1440, 1.2)}px`);
-  else root.style.removeProperty('--u');
+  if (desk.matches) {
+    const u = Math.min(root.clientWidth / 1440, 1.2);
+    root.style.setProperty('--u', `${u}px`);
+    root.style.setProperty('--gut', `${Math.max(0, (root.clientWidth - 1440 * u) / 2)}px`);
+  } else {
+    root.style.removeProperty('--u');
+    root.style.removeProperty('--gut');
+  }
 }
 /* the oversized words must span exactly the width they have in Figma, whatever font ends up loading */
 function fit() {

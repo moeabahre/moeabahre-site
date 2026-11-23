@@ -3,6 +3,8 @@
    the same way the frame does. Below 900px the layout stacks. */
 :root {
   --u: min(calc(100vw / 1440), 1.2px);
+  /* past 1728px the frame stops growing and sits centred; --gut is the empty side margin (set exactly by JS) */
+  --gut: max(0px, calc((100vw - 1440 * var(--u)) / 2));
   --ink: #090908; --ink2: #0b0b0b; --mute: #63635e; --mute2: #6b6b66; --mute3: #7a7a75; --grey: #757575;
   --bg: #efefef; --bar: #e6e6e6; --line: #a4a4a4; --night: #060607; --paper: #f6f6f2;
   --cond: 'LS Cond', 'Archivo Variable', 'Alexandria Variable', sans-serif;
@@ -33,7 +35,7 @@ i { font-style: normal; }
 [dir='rtl'] * { letter-spacing: 0 !important; }
 
 /* --------------------------------------------------------------- header */
-.hdr { position: fixed; z-index: 50; top: calc(41 * var(--u)); left: calc(40 * var(--u)); width: calc(1361 * var(--u)); height: calc(104 * var(--u)); display: flex; background: var(--bar); border: 1px solid #b9b9b9; transition: transform .6s var(--ease), top .6s var(--ease); }
+.hdr { position: fixed; z-index: 50; top: calc(41 * var(--u)); left: calc(var(--gut) + 40 * var(--u)); width: calc(1361 * var(--u)); height: calc(104 * var(--u)); display: flex; background: var(--bar); border: 1px solid #b9b9b9; transition: transform .6s var(--ease), top .6s var(--ease); }
 .hdr.away { transform: translateY(calc(-100% - 60 * var(--u))); }
 .hdr.stuck { top: calc(12 * var(--u)); }
 .hdr > * { border-inline-end: 1px solid #b9b9b9; }
@@ -66,11 +68,11 @@ i { font-style: normal; }
 .hdr-menu { display: none; }
 
 /* ----------------------------------------------------------------- hero */
-.hero { position: relative; height: calc(1000 * var(--u)); background: linear-gradient(180deg, #e6e6e6, #efefef); overflow: hidden; isolation: isolate; }
+.hero { position: relative; width: calc(1440 * var(--u)); max-width: 100%; margin-inline: auto; height: calc(1000 * var(--u)); border-image: linear-gradient(180deg, #e6e6e6, #efefef) fill 0 / 0 / 0 var(--gut); overflow: visible clip; isolation: isolate; }
 .hero-grid { position: absolute; left: calc(1 * var(--u)); top: 0; width: calc(1439 * var(--u)); height: calc(1000 * var(--u)); z-index: 0; }
 .hatch { position: absolute; top: calc(327 * var(--u)); height: calc(366 * var(--u)); width: calc(113 * var(--u)); z-index: 0; opacity: .35; border-block: 1px solid #b7b7b7; background: repeating-linear-gradient(-60deg, transparent 0 calc(11 * var(--u)), #b7b7b7 calc(11 * var(--u)) calc(12 * var(--u))); }
-.hatch-l { left: 0; }
-.hatch-r { right: 0; }
+.hatch-l { left: calc(-1 * var(--gut)); width: calc(113 * var(--u) + var(--gut)); }
+.hatch-r { right: calc(-1 * var(--gut)); width: calc(113 * var(--u) + var(--gut)); }
 .hero-port { position: absolute; z-index: 1; left: calc(382 * var(--u)); top: calc(151 * var(--u)); width: calc(688 * var(--u)); }
 .hero-port img { width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
 .hero-big span, .hero-name span, .ftr-big span { display: inline-block; }
@@ -93,7 +95,7 @@ i { font-style: normal; }
 [dir='rtl'] .hero-name { line-height: calc(230 * var(--u)); }
 
 /* ------------------------------------------------------------- sections */
-.sec { position: relative; padding-inline: calc(110 * var(--u)) calc(110 * var(--u)); }
+.sec { position: relative; padding-inline: calc(var(--gut) + 110 * var(--u)); }
 .sec-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: calc(40 * var(--u)); border-bottom: 1px solid var(--line); font-size: calc(15 * var(--u)); font-weight: 500; line-height: calc(20 * var(--u)); }
 .sec-top .mute { font-size: calc(13 * var(--u)); color: var(--mute); }
 
@@ -249,7 +251,7 @@ i { font-style: normal; }
 .cta-close { margin-top: calc(33 * var(--u)); font-size: calc(11 * var(--u)); color: #858585; font-weight: 500; }
 
 /* footer */
-.ftr { background: #e8e8e7; border-top: 2px solid #000; padding: calc(102 * var(--u)) calc(110 * var(--u)) calc(62 * var(--u)); overflow: hidden; }
+.ftr { background: #e8e8e7; border-top: 2px solid #000; padding: calc(102 * var(--u)) calc(var(--gut) + 110 * var(--u)) calc(62 * var(--u)); overflow: hidden; }
 .ftr-top { display: grid; grid-template-columns: calc(610 * var(--u)) calc(270 * var(--u)) calc(180 * var(--u)) 1fr; }
 .ftr-brand .logo svg { width: calc(179 * var(--u)); height: auto; display: block; }
 .ftr-brand p { margin-top: calc(21 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(18 * var(--u)); color: #636363; font-weight: 500; }
@@ -285,7 +287,7 @@ i { font-style: normal; }
   .hdr-link i { font-size: 11px; }
   .hdr-link b { font-size: 18px; }
 
-  .hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; padding: 100px 16px 0; }
+  .hero { width: auto; overflow: hidden; height: auto; min-height: 100svh; display: flex; flex-direction: column; padding: 100px 16px 0; }
   .hero-grid, .hatch { display: none; }
   .hero-role, [dir='rtl'] .hero-role { position: relative; left: auto; right: auto; top: auto; order: 1; }
   .hero-role p, [dir='rtl'] .hero-role p { font-size: 40px; line-height: 44px; }
