@@ -1,26 +1,185 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Header from '../../components/Header.astro';
-import Hero from '../../components/Hero.astro';
-import Statement from '../../components/Statement.astro';
-import Work from '../../components/Work.astro';
-import About from '../../components/About.astro';
-import Contact from '../../components/Contact.astro';
-import Mark from '../../components/Mark.astro';
-import { langs, type Lang } from '../../i18n/strings';
+import logo from '../../assets/full-logo.svg?raw';
+import { content, langs, EMAIL, LINKEDIN, CV, type Lang } from '../../i18n/content';
 export function getStaticPaths() { return langs.map((lang) => ({ params: { lang } })); }
 const lang = Astro.params.lang as Lang;
+const c = content[lang];
+const other: Lang = lang === 'en' ? 'ar' : 'en';
+const arrow = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24L24 8M24 20V8H12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
 ---
 <Base lang={lang}>
-  <div class="pre" id="pre" aria-hidden="true"><div class="pm"><Mark split /></div><span class="cnt" id="cnt">0</span></div>
-  <div class="cur" id="cur" aria-hidden="true"></div>
-  <Header lang={lang} />
-  <main>
-    <Hero lang={lang} />
-    <Statement lang={lang} />
-    <Work lang={lang} />
-    <About lang={lang} />
-    <Contact lang={lang} />
+  <a class="skip" href="#main">{lang === 'ar' ? 'انتقل للمحتوى' : 'Skip to content'}</a>
+
+  <!-- 01 HERO ----------------------------------------------------------- -->
+  <header class="hdr" id="hdr">
+    <a class="hdr-brand" href={`/${lang}/`} aria-label="moe. home">
+      <span class="logo" set:html={logo} />
+      <span class="hdr-meta">{c.header.meta}</span>
+    </a>
+    <nav class="hdr-nav" id="nav" aria-label={lang === 'ar' ? 'الرئيسية' : 'Main'}>
+      {c.header.nav.map(([label, href], i) => (
+        <a href={href} class:list={['hdr-link', { on: i === 0 }]}><i>{String(i + 1).padStart(2, '0')}</i><b>{label}</b></a>
+      ))}
+    </nav>
+    <div class="hdr-status">
+      <div class="hdr-loc"><b>{c.header.location}</b><a class="hdr-lang" href={`/${other}/`} hreflang={other} lang={other}>{c.langSwitch}</a></div>
+      <span class="hdr-av"><i class="dot"></i>{c.header.available}</span>
+    </div>
+    <a class="hdr-cv" href={CV} download>
+      <span><i>{c.header.cvEyebrow}</i><b>{c.header.cv}</b></span>
+      <span class="sq" set:html={arrow} />
+    </a>
+    <button class="hdr-menu" id="menuBtn" type="button" aria-controls="nav" aria-expanded="false" data-open={c.header.menu} data-close={c.header.close}>{c.header.menu}</button>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home" aria-label={c.hero.name}>
+      <img class="hero-grid" src="/img/hero-grid.svg" alt="" aria-hidden="true" />
+      <span class="hatch hatch-l" aria-hidden="true"></span>
+      <span class="hatch hatch-r" aria-hidden="true"></span>
+      <div class="hero-port" id="port"><img src="/img/portrait.webp" alt={c.hero.name} width="1218" height="1504" fetchpriority="high" /></div>
+      <p class="hero-big" aria-hidden="true" dir="ltr" data-fit><span>{c.hero.big}</span></p>
+      <h1 class="hero-name" data-in data-fit><span>{c.hero.name}</span></h1>
+      <div class="hero-role" data-in>
+        <p>{c.hero.role[0]}<br />{c.hero.role[1]}</p>
+        <a class="cta-dark" href="#contact"><span><i>{c.hero.ctaEyebrow}</i><b>{c.hero.cta}</b></span><span class="sq" set:html={arrow} /></a>
+      </div>
+      <p class="hero-pitch" data-in>{c.hero.pitch}</p>
+    </section>
+
+    <!-- 02 ABOUT --------------------------------------------------------- -->
+    <section class="sec about" id="about" aria-labelledby="ab-h">
+      <div class="sec-top" data-rv><span>{c.about.label}</span><span class="mute">{c.about.note}</span></div>
+      <div class="about-grid">
+        <h2 class="about-lead" id="ab-h" data-rv>{c.about.lead.map(([t, b]) => (b ? <strong>{t}</strong> : t))}</h2>
+        <div class="about-intro" data-rv>
+          <p class="about-p1">{c.about.intro}</p>
+          <p class="about-p2">{c.about.body}</p>
+        </div>
+      </div>
+      <div class="triad" data-rv><span>{c.about.triad}</span><i></i></div>
+      <div class="about-grid about-low">
+        <div class="evo" data-rv>
+          <svg class="star" viewBox="0 0 370 370" aria-hidden="true"><path d="M212.711 0H157.197V370H212.711V0Z"/><path d="M370 157.197H0V212.711H370V157.197Z"/><path d="M296.175 34.4791L34.5458 296.109L73.8 335.363L335.43 73.7334L296.175 34.4791Z"/><path d="M73.8 34.5446L34.5458 73.7988L296.175 335.428L335.43 296.174L73.8 34.5446Z"/></svg>
+          <div class="evo-head">
+            <p>{c.about.evo[0]}<br />{c.about.evo[1]}</p>
+            <div class="badge"><b dir="ltr">{c.about.years}</b><span><i>{c.about.yearsLabel}</i><i>{c.about.yearsRange}</i></span></div>
+          </div>
+          <ol class="tl">
+            {c.about.timeline.map((m) => (
+              <li class:list={[m.pos, { now: m.now }]}>
+                <span class="tl-y">{m.year}</span>
+                <b>{m.title.map((t, i) => <>{i > 0 && <br />}{t}</>)}</b>
+                <span class="tl-s">{m.sub}</span>
+              </li>
+            ))}
+          </ol>
+          <div class="today"><span>{c.about.today}</span><b>{c.about.todayRole}</b><span>{c.about.todayNote}</span></div>
+        </div>
+        <div class="pillars">
+          {c.about.pillars.map(([n, t, d]) => (
+            <div class="pillar" data-rv><span class="pn">{n}</span><b>{t}</b><p>{d}</p></div>
+          ))}
+          <a class="more" href="#expertise" data-rv><span>{c.about.more}</span><span class="ar-ico" set:html={arrow} /></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 WORK ---------------------------------------------------------- -->
+    <section class="sec work" id="work" aria-labelledby="wk-h">
+      <div class="sec-top" data-rv><span>{c.work.label}</span><span class="mute">{c.work.note}</span></div>
+      <div class="work-top">
+        <div>
+          <h2 class="mast" id="wk-h" data-rv><span>{c.work.mast[0]}</span><span>{c.work.mast[1]}</span></h2>
+          <p class="work-intro" data-rv>{c.work.intro}</p>
+        </div>
+        <article class="case" data-rv>
+          <span class="case-n" aria-hidden="true">{c.work.feature.n}</span>
+          <h3 dir="ltr">{c.work.feature.title[0]}<br />{c.work.feature.title[1]}</h3>
+          <p class="kick">{c.work.feature.kicker}</p>
+          <p class="case-d">{c.work.feature.desc}</p>
+          <div class="case-meta">
+            <span><i>{c.work.feature.roleL}</i><b>{c.work.feature.role}</b></span>
+            <span><i>{c.work.feature.focusL}</i><b>{c.work.feature.focus}</b></span>
+          </div>
+          <p class="case-y">{c.work.feature.years}</p>
+        </article>
+      </div>
+      <div class="idx-top" data-rv><span>{c.work.moreLabel}</span><span class="mute">{c.work.moreCount}</span></div>
+      <ul class="idx">
+        {c.work.rows.map((r, i) => (
+          <li class:list={['row', { alt: i % 2 === 1 }]} data-rv>
+            <a href="#contact">
+              <span class="row-n">{r.n}</span>
+              <h3 class="row-t">{r.title[0]}<br />{r.title[1]}</h3>
+              <span class="row-m"><i>{r.type}</i><span>{r.desc}</span></span>
+              <span class="row-r"><i>{r.role}</i><b>{r.years}</b></span>
+              <span class="row-go" set:html={arrow} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 04 HOW I THINK ---------------------------------------------------- -->
+    <section class="sec think" id="expertise" aria-labelledby="th-h">
+      <div class="sec-top dark-rule" data-rv><span>{c.think.label}</span><span class="mute">{c.think.note}</span></div>
+      <div class="think-top">
+        <h2 id="th-h" data-rv><span>{c.think.head[0]}</span><span class="g">{c.think.head[1]}</span></h2>
+        <p data-rv>{c.think.intro}</p>
+      </div>
+      <div class="think-idx" data-rv><span>{c.think.index}</span><span>{c.think.balance}</span></div>
+      <ol class="tensions">
+        {c.think.tensions.map(([n, a, b, d], i) => (
+          <li class:list={['tn', { inv: i === 1 }]} data-rv>
+            <span class="tn-n">{n}</span>
+            <div class="tn-row"><b>{a}</b><span class="meets">{c.think.meets}</span><b class="tn-b">{b}</b></div>
+            <p>{d}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="practice" data-rv><span>{c.think.practiceL}</span><p>{c.think.practice}</p><span>{c.think.mark}</span></div>
+    </section>
+
+    <!-- 05 CTA ----------------------------------------------------------- -->
+    <section class="sec cta" id="contact" aria-labelledby="ct-h">
+      <div class="sec-top" data-rv><span>{c.cta.label}</span><span class="mute">{c.cta.note}</span></div>
+      <div class="cta-top">
+        <h2 id="ct-h"><span class="w" data-line>{c.cta.head[0]}</span><span class="g" data-line>{c.cta.head[1]}</span><span class="g" data-line>{c.cta.head[2]}</span></h2>
+        <p data-rv>{c.cta.body}</p>
+      </div>
+      <a class="convo" href={`mailto:${EMAIL}`} data-rv>
+        <span><i>{c.cta.btnEyebrow}</i><b>{c.cta.btn}</b></span>
+        <span class="ar-ico" set:html={arrow} />
+      </a>
+      <div class="cta-low" data-rv><span>{c.cta.services}</span><a href={`mailto:${EMAIL}`} dir="ltr">{EMAIL.toUpperCase()}</a></div>
+      <p class="cta-close">{c.cta.closing}</p>
+    </section>
   </main>
+
+  <!-- 06 FOOTER ----------------------------------------------------------- -->
+  <footer class="ftr">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <span class="logo" set:html={logo} />
+        <p>{c.footer.pos[0]}<br />{c.footer.pos[1]}</p>
+      </div>
+      <div class="ftr-col"><i>{c.footer.explore}</i>{c.footer.links.map(([l, h]) => <a href={h}>{l}</a>)}</div>
+      <div class="ftr-col"><i>{c.footer.connect}</i>
+        <a href={`mailto:${EMAIL}`}>{c.footer.email} ↗</a>
+        <a href={LINKEDIN} target="_blank" rel="noopener">{c.footer.linkedin} ↗</a>
+        <a href={CV} download>{c.footer.cv} ↗</a>
+      </div>
+      <div class="ftr-col ftr-loc"><i>{c.footer.based}</i><b>{c.footer.location}</b></div>
+    </div>
+    <p class="ftr-big" aria-hidden="true" dir="ltr" data-fit><span>{c.footer.big}</span></p>
+    <div class="ftr-low">
+      <span>{c.footer.copy}</span>
+      <span>{c.footer.craft}</span>
+      <a href="#home">{c.footer.top}&nbsp;&nbsp;↑</a>
+    </div>
+  </footer>
+
   <script>import '../../scripts/main.ts';</script>
 </Base>
