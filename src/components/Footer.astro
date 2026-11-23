@@ -1,0 +1,30 @@
+---
+import logo from '../assets/full-logo.svg?raw';
+import { content, EMAIL, LINKEDIN, CV, ARROW as arrow, type Lang } from '../i18n/content';
+interface Props { lang: Lang; base?: string; other?: string }
+const { lang, base = '', other: otherHref } = Astro.props;
+const c = content[lang];
+const other: Lang = lang === 'en' ? 'ar' : 'en';
+---
+<footer class="ftr">
+  <div class="ftr-top">
+    <div class="ftr-brand">
+      <span class="logo" set:html={logo} />
+      <p>{c.footer.pos[0]}<br />{c.footer.pos[1]}</p>
+    </div>
+    <div class="ftr-col"><i>{c.footer.explore}</i>{c.footer.links.map(([l, h]) => <a href={base + h}>{l}</a>)}</div>
+    <div class="ftr-col"><i>{c.footer.connect}</i>
+      <a href={`mailto:${EMAIL}`}>{c.footer.email} ↗</a>
+      <a href={LINKEDIN} target="_blank" rel="noopener">{c.footer.linkedin} ↗</a>
+      <a href={CV} download>{c.footer.cv} ↗</a>
+    </div>
+    <div class="ftr-col ftr-loc"><i>{c.footer.based}</i><b>{c.footer.location}</b></div>
+  </div>
+  <p class="ftr-big" aria-hidden="true" dir="ltr" data-fit><span>{c.footer.big}</span></p>
+  <div class="ftr-low">
+    <span>{c.footer.copy}</span>
+    <span>{c.footer.craft}</span>
+    <a href="#top">{c.footer.top}&nbsp;&nbsp;↑</a>
+  </div>
+</footer>
+

@@ -1,0 +1,21 @@
+---
+import logo from '../assets/full-logo.svg?raw';
+import { content, EMAIL, LINKEDIN, CV, ARROW as arrow, type Lang } from '../i18n/content';
+interface Props { lang: Lang; base?: string; other?: string }
+const { lang, base = '', other: otherHref } = Astro.props;
+const c = content[lang];
+const other: Lang = lang === 'en' ? 'ar' : 'en';
+---
+<section class="sec cta" id="contact" aria-labelledby="ct-h">
+  <div class="sec-top" data-rv><span>{c.cta.label}</span><span class="mute">{c.cta.note}</span></div>
+  <div class="cta-top">
+    <h2 id="ct-h"><span class="w" data-line>{c.cta.head[0]}</span><span class="g" data-line>{c.cta.head[1]}</span><span class="g" data-line>{c.cta.head[2]}</span></h2>
+    <p data-rv>{c.cta.body}</p>
+  </div>
+  <a class="convo" href={`mailto:${EMAIL}`} data-rv>
+    <span><i>{c.cta.btnEyebrow}</i><b>{c.cta.btn}</b></span>
+    <span class="ar-ico" set:html={arrow} />
+  </a>
+  <div class="cta-low" data-rv><span>{c.cta.services}</span><a href={`mailto:${EMAIL}`} dir="ltr">{EMAIL.toUpperCase()}</a></div>
+  <p class="cta-close">{c.cta.closing}</p>
+</section>

@@ -1,0 +1,67 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Header from '../../../components/Header.astro';
+import Cta from '../../../components/Cta.astro';
+import Footer from '../../../components/Footer.astro';
+import { content, cases, caseUi, langs, ARROW as arrow, type Lang } from '../../../i18n/content';
+export function getStaticPaths() {
+  return langs.flatMap((lang) => cases[lang].map((k, i) => ({ params: { lang, slug: k.slug }, props: { i } })));
+}
+const lang = Astro.params.lang as Lang;
+const { i } = Astro.props as { i: number };
+const list = cases[lang];
+const k = list[i];
+const next = list[(i + 1) % list.length];
+const u = caseUi[lang];
+const c = content[lang];
+const other = lang === 'en' ? 'ar' : 'en';
+const meta = [[u.role, k.role], ...(k.focus ? [[u.focus, k.focus]] : []), [u.years, k.years], [u.type, k.type]];
+const latin = /^[\x00-\x7F\s]+$/.test(k.title.join(''));
+---
+<Base lang={lang} title={`${k.title.join(' ')} · ${c.hero.name}`} description={k.desc} path={`work/${k.slug}/`}>
+  <a class="skip" href="#main">{lang === 'ar' ? 'انتقل للمحتوى' : 'Skip to content'}</a>
+  <Header lang={lang} base={`/${lang}/`} other={`/${other}/work/${k.slug}/`} />
+  <main id="main">
+    <section class="sec case-hero">
+      <div class="sec-top" data-rv>
+        <a href={`/${lang}/#work`} class="back"><span class="ar-ico back-ico" set:html={arrow} />{u.back}</a>
+        <span class="mute">{u.label} {k.n} / 03</span>
+      </div>
+      <div class="ch-grid">
+        <h1 class="ch-title" dir={latin ? 'ltr' : undefined} data-rv>{k.title[0]}<br /><span>{k.title[1]}</span></h1>
+        <div class="ch-side" data-rv>
+          <p class="kick">{k.type}</p>
+          <p class="ch-desc">{k.desc}</p>
+        </div>
+      </div>
+      <dl class="ch-meta" data-rv>
+        {meta.map(([a, b]) => <div><dt>{a}</dt><dd>{b}</dd></div>)}
+      </dl>
+      <figure class="ch-cover" data-rv>
+        {k.images?.[0]
+          ? <img src={k.images[0].src} alt={k.images[0].alt} />
+          : <div class="ch-type" aria-hidden="true"><span class="ch-n">{k.n}</span><b dir={latin ? 'ltr' : undefined}>{k.title.join(' ')}</b></div>}
+      </figure>
+    </section>
+
+    {k.sections && k.sections.length > 0 && (
+      <section class="sec ch-body">
+        {k.sections.map(([h, p], j) => (
+          <div class="ch-row" data-rv><span>{String(j + 1).padStart(2, '0')} — {h}</span><p>{p}</p></div>
+        ))}
+        {k.images?.slice(1).map((im) => <img class="ch-img" src={im.src} alt={im.alt} loading="lazy" data-rv />)}
+      </section>
+    )}
+
+    <section class="sec ch-next">
+      <a href={`/${lang}/work/${next.slug}/`} data-rv>
+        <i>{u.next} — {next.n}</i>
+        <b dir={/^[\x00-\x7F\s]+$/.test(next.title.join('')) ? 'ltr' : undefined}>{next.title.join(' ')}</b>
+        <span class="ar-ico" set:html={arrow} />
+      </a>
+    </section>
+    <Cta lang={lang} />
+  </main>
+  <Footer lang={lang} base={`/${lang}/`} />
+  <script>import '../../../scripts/main.ts';</script>
+</Base>

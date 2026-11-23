@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import logo from '../assets/full-logo.svg?raw';
+---
+<Base lang="en" title="Not found · Mohammad Abahre" path="404">
+  <main class="nf">
+    <span class="logo" set:html={logo} />
+    <p class="nf-n" aria-hidden="true">404</p>
+    <p class="nf-t">THIS PAGE DOESN’T EXIST. <span lang="ar" dir="rtl">الصفحة غير موجودة.</span></p>
+    <p class="nf-l"><a class="nf-b" href="/en/">HOME</a><a class="nf-b" href="/ar/" lang="ar">الرئيسية</a></p>
+  </main>
+</Base>
+<style>
+  .nf { min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 24px; padding: 24px; text-align: center; background: linear-gradient(180deg, #e6e6e6, #efefef); }
+  .nf .logo :global(svg) { width: 180px; height: auto; display: block; }
+  .nf-n { margin: 0; font-family: var(--cond); font-stretch: 62%; font-weight: 900; font-size: clamp(120px, 26vw, 320px); line-height: .9; background: linear-gradient(180deg, #b5b5b5, #efefef 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nf-t { font-family: var(--exp); font-stretch: 125%; font-size: 13px; font-weight: 500; }
+  .nf-l { display: flex; gap: 10px; }
+  .nf-b { background: #0b0b0b; color: #fff; padding: 14px 22px; font-family: var(--exp); font-stretch: 125%; font-weight: 800; font-size: 13px; }
+</style>

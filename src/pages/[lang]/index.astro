@@ -1,37 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
-import logo from '../../assets/full-logo.svg?raw';
-import { content, langs, EMAIL, LINKEDIN, CV, type Lang } from '../../i18n/content';
+import Header from '../../components/Header.astro';
+import Cta from '../../components/Cta.astro';
+import Footer from '../../components/Footer.astro';
+import { content, cases, langs, ARROW as arrow, type Lang } from '../../i18n/content';
 export function getStaticPaths() { return langs.map((lang) => ({ params: { lang } })); }
 const lang = Astro.params.lang as Lang;
 const c = content[lang];
-const other: Lang = lang === 'en' ? 'ar' : 'en';
-const arrow = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24L24 8M24 20V8H12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
 ---
 <Base lang={lang}>
   <a class="skip" href="#main">{lang === 'ar' ? 'انتقل للمحتوى' : 'Skip to content'}</a>
 
   <!-- 01 HERO ----------------------------------------------------------- -->
-  <header class="hdr" id="hdr">
-    <a class="hdr-brand" href={`/${lang}/`} aria-label="moe. home">
-      <span class="logo" set:html={logo} />
-      <span class="hdr-meta">{c.header.meta}</span>
-    </a>
-    <nav class="hdr-nav" id="nav" aria-label={lang === 'ar' ? 'الرئيسية' : 'Main'}>
-      {c.header.nav.map(([label, href], i) => (
-        <a href={href} class:list={['hdr-link', { on: i === 0 }]}><i>{String(i + 1).padStart(2, '0')}</i><b>{label}</b></a>
-      ))}
-    </nav>
-    <div class="hdr-status">
-      <div class="hdr-loc"><b>{c.header.location}</b><a class="hdr-lang" href={`/${other}/`} hreflang={other} lang={other}>{c.langSwitch}</a></div>
-      <span class="hdr-av"><i class="dot"></i>{c.header.available}</span>
-    </div>
-    <a class="hdr-cv" href={CV} download>
-      <span><i>{c.header.cvEyebrow}</i><b>{c.header.cv}</b></span>
-      <span class="sq" set:html={arrow} />
-    </a>
-    <button class="hdr-menu" id="menuBtn" type="button" aria-controls="nav" aria-expanded="false" data-open={c.header.menu} data-close={c.header.close}>{c.header.menu}</button>
-  </header>
+  <Header lang={lang} />
 
   <main id="main">
     <section class="hero" id="home" aria-label={c.hero.name}>
@@ -94,7 +75,7 @@ const arrow = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24L24 8M2
           <h2 class="mast" id="wk-h" data-rv><span>{c.work.mast[0]}</span><span>{c.work.mast[1]}</span></h2>
           <p class="work-intro" data-rv>{c.work.intro}</p>
         </div>
-        <article class="case" data-rv>
+        <a class="case" href={`/${lang}/work/${cases[lang][0].slug}/`} data-rv>
           <span class="case-n" aria-hidden="true">{c.work.feature.n}</span>
           <h3 dir="ltr">{c.work.feature.title[0]}<br />{c.work.feature.title[1]}</h3>
           <p class="kick">{c.work.feature.kicker}</p>
@@ -104,13 +85,13 @@ const arrow = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24L24 8M2
             <span><i>{c.work.feature.focusL}</i><b>{c.work.feature.focus}</b></span>
           </div>
           <p class="case-y">{c.work.feature.years}</p>
-        </article>
+        </a>
       </div>
       <div class="idx-top" data-rv><span>{c.work.moreLabel}</span><span class="mute">{c.work.moreCount}</span></div>
       <ul class="idx">
         {c.work.rows.map((r, i) => (
           <li class:list={['row', { alt: i % 2 === 1 }]} data-rv>
-            <a href="#contact">
+            <a href={`/${lang}/work/${cases[lang][i + 1].slug}/`}>
               <span class="row-n">{r.n}</span>
               <h3 class="row-t">{r.title[0]}<br />{r.title[1]}</h3>
               <span class="row-m"><i>{r.type}</i><span>{r.desc}</span></span>
@@ -143,43 +124,9 @@ const arrow = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24L24 8M2
     </section>
 
     <!-- 05 CTA ----------------------------------------------------------- -->
-    <section class="sec cta" id="contact" aria-labelledby="ct-h">
-      <div class="sec-top" data-rv><span>{c.cta.label}</span><span class="mute">{c.cta.note}</span></div>
-      <div class="cta-top">
-        <h2 id="ct-h"><span class="w" data-line>{c.cta.head[0]}</span><span class="g" data-line>{c.cta.head[1]}</span><span class="g" data-line>{c.cta.head[2]}</span></h2>
-        <p data-rv>{c.cta.body}</p>
-      </div>
-      <a class="convo" href={`mailto:${EMAIL}`} data-rv>
-        <span><i>{c.cta.btnEyebrow}</i><b>{c.cta.btn}</b></span>
-        <span class="ar-ico" set:html={arrow} />
-      </a>
-      <div class="cta-low" data-rv><span>{c.cta.services}</span><a href={`mailto:${EMAIL}`} dir="ltr">{EMAIL.toUpperCase()}</a></div>
-      <p class="cta-close">{c.cta.closing}</p>
-    </section>
+    <Cta lang={lang} />
   </main>
 
-  <!-- 06 FOOTER ----------------------------------------------------------- -->
-  <footer class="ftr">
-    <div class="ftr-top">
-      <div class="ftr-brand">
-        <span class="logo" set:html={logo} />
-        <p>{c.footer.pos[0]}<br />{c.footer.pos[1]}</p>
-      </div>
-      <div class="ftr-col"><i>{c.footer.explore}</i>{c.footer.links.map(([l, h]) => <a href={h}>{l}</a>)}</div>
-      <div class="ftr-col"><i>{c.footer.connect}</i>
-        <a href={`mailto:${EMAIL}`}>{c.footer.email} ↗</a>
-        <a href={LINKEDIN} target="_blank" rel="noopener">{c.footer.linkedin} ↗</a>
-        <a href={CV} download>{c.footer.cv} ↗</a>
-      </div>
-      <div class="ftr-col ftr-loc"><i>{c.footer.based}</i><b>{c.footer.location}</b></div>
-    </div>
-    <p class="ftr-big" aria-hidden="true" dir="ltr" data-fit><span>{c.footer.big}</span></p>
-    <div class="ftr-low">
-      <span>{c.footer.copy}</span>
-      <span>{c.footer.craft}</span>
-      <a href="#home">{c.footer.top}&nbsp;&nbsp;↑</a>
-    </div>
-  </footer>
-
+  <Footer lang={lang} />
   <script>import '../../scripts/main.ts';</script>
 </Base>

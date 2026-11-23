@@ -4,30 +4,35 @@ import '@fontsource-variable/alexandria';
 import '../styles/fonts.css';
 import '../styles/global.css';
 import { content, type Lang } from '../i18n/content';
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+interface Props { lang: Lang; title?: string; description?: string; path?: string }
+const { lang, title, description, path = '' } = Astro.props;
 const c = content[lang];
 const other: Lang = lang === 'en' ? 'ar' : 'en';
-const canonical = new URL(`/${lang}/`, Astro.site);
+const canonical = new URL(`/${lang}/${path}`, Astro.site);
+const pageTitle = title ?? c.title;
+const pageDesc = description ?? c.description;
 ---
 <!doctype html>
 <html lang={lang} dir={c.dir}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>{c.title}</title>
-  <meta name="description" content={c.description} />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDesc} />
   <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang={other} href={new URL(`/${other}/`, Astro.site)} />
+  <link rel="alternate" hreflang={other} href={new URL(`/${other}/${path}`, Astro.site)} />
   <link rel="alternate" hreflang={lang} href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="preload" as="image" href="/img/portrait.webp" />
-  <meta property="og:title" content={c.title} />
-  <meta property="og:description" content={c.description} />
+  {!path && <link rel="preload" as="image" href="/img/portrait.webp" />}
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDesc} />
   <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#E6E6E6" />
 </head>
-<body>
+<body id="top">
   <slot />
 </body>
 </html>

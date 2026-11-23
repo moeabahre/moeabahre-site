@@ -215,6 +215,34 @@ const ar: Content = {
 };
 
 export const content: Record<Lang, Content> = { en, ar };
-export const EMAIL = 'moeabahre@gmail.com';
+export const EMAIL = 'me@moeabahre.com';
+export const ARROW = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24L24 8M24 20V8H12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
 export const LINKEDIN = 'https://www.linkedin.com/in/moeabahre';
 export const CV = '/cv.pdf';
+
+/* ---- case studies: built from the facts in the Figma file only.
+   Add `sections` ([heading, paragraph][]) and `images` (paths under /public/work/<slug>/) as material arrives. */
+export interface Case {
+  slug: string; n: string; title: [string, string]; type: string; desc: string;
+  role: string; focus?: string; years: string;
+  sections?: [string, string][]; images?: { src: string; alt: string }[];
+}
+export const caseUi = {
+  en: { label: 'CASE', back: 'ALL WORK', role: 'ROLE', focus: 'FOCUS', years: 'YEARS', type: 'TYPE', next: 'NEXT PROJECT', view: 'VIEW CASE' },
+  ar: { label: 'مشروع', back: 'كل الأعمال', role: 'الدور', focus: 'التركيز', years: 'السنوات', type: 'النوع', next: 'المشروع التالي', view: 'شاهد المشروع' },
+};
+export const cases: Record<Lang, Case[]> = {
+  en: [
+    { slug: 'microsoft-copilot', n: '01', title: ['Microsoft', 'Copilot'], type: 'HUMAN–AI INTERACTION', desc: en.work.feature.desc, role: en.work.feature.role, focus: en.work.feature.focus, years: en.work.feature.years },
+    { slug: 'dubai-police', n: '02', ...pick(en.work.rows[0]) },
+    { slug: 'dpds-design-system', n: '03', ...pick(en.work.rows[1]) },
+  ],
+  ar: [
+    { slug: 'microsoft-copilot', n: '01', title: ['Microsoft', 'Copilot'], type: ar.work.feature.kicker, desc: ar.work.feature.desc, role: ar.work.feature.role, focus: ar.work.feature.focus, years: ar.work.feature.years },
+    { slug: 'dubai-police', n: '02', ...pick(ar.work.rows[0]) },
+    { slug: 'dpds-design-system', n: '03', ...pick(ar.work.rows[1]) },
+  ],
+};
+function pick(r: Content['work']['rows'][number]) {
+  return { title: r.title as [string, string], type: r.type, desc: r.desc, role: r.role, years: r.years };
+}

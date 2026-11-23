@@ -65,7 +65,11 @@ addEventListener('scroll', () => {
 }, { passive: true });
 
 const links = $$<HTMLAnchorElement>('.hdr-link');
-const sections = links.map((a) => $(a.getAttribute('href')!)).filter(Boolean) as HTMLElement[];
+const sections = links
+  .map((a) => a.getAttribute('href')!)
+  .filter((h) => h.startsWith('#'))
+  .map((h) => $(h))
+  .filter(Boolean) as HTMLElement[];
 const spy = new IntersectionObserver((entries) => {
   entries.forEach((en) => {
     if (!en.isIntersecting) return;
@@ -86,7 +90,9 @@ $$<HTMLAnchorElement>('a[href^="#"]').forEach((a) =>
   }));
 
 /* motion */
-if (!calm) {
+const isHome = !!$('.hero');
+if (!calm && !isHome) gsap.from('#hdr', { y: -30, opacity: 0, duration: 1.1, ease: 'expo.out' });
+if (!calm && isHome) {
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
   tl.from('#hdr', { y: -30, opacity: 0, duration: 1.1 }, 0)
     .from('.hero-port', { y: 60, opacity: 0, duration: 1.6 }, 0.1)
@@ -100,12 +106,14 @@ if (!calm) {
   gsap.to('.hero-big', { yPercent: -35, ease: 'none', scrollTrigger: { ...hero } });
   gsap.to('.hero-name', { yPercent: -60, ease: 'none', scrollTrigger: { ...hero } });
 
-  $$('[data-rv]').forEach((el) =>
-    gsap.from(el, { y: 36, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));
-
   gsap.from('.tl li', { opacity: 0, y: 12, duration: 0.8, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: '.evo', start: 'top 80%' } });
   gsap.from('.star', { rotate: -45, scale: 0.8, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.evo', start: 'top 85%' } });
   gsap.to('.star', { rotate: 45, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true } });
+}
+
+if (!calm) {
+  $$('[data-rv]').forEach((el) =>
+    gsap.from(el, { y: 36, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));
 
   gsap.from('[data-line]', { yPercent: 100, opacity: 0, duration: 1.3, stagger: 0.12, ease: 'expo.out', scrollTrigger: { trigger: '.cta h2', start: 'top 85%' } });
 
