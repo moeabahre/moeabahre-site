@@ -124,6 +124,16 @@ if (!calm && $('.evo')) {
   gsap.to('.star', { rotate: 45, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true } });
 }
 
+/* how I think: each balance point swings from one truth to the other, then settles where it belongs */
+if (!calm) {
+  $$('.bl').forEach((row) => {
+    const pos = parseFloat(getComputedStyle(row).getPropertyValue('--pos')) || 0.5;
+    gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 80%' } })
+      .fromTo(row, { '--p': 0 }, { '--p': 1, duration: 0.7, ease: 'power2.inOut' })
+      .to(row, { '--p': pos, duration: 1.1, ease: 'elastic.out(1, 0.6)' });
+  });
+}
+
 if (!calm) {
   $$('[data-rv]').forEach((el) =>
     gsap.from(el, { y: 36, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));

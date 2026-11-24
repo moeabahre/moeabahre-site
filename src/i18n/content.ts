@@ -76,6 +76,9 @@ const en = {
     index: 'THE TENSIONS I THINK THROUGH',
     balance: 'BALANCE CREATES THE DIRECTION',
     meets: 'MEETS',
+    balanceL: 'BALANCE',
+    // where the balance sits on each scale, 0 = first truth, 1 = second
+    pos: [0.42, 0.58, 0.5],
     tensions: [
       ['01', 'HUMAN NEEDS', 'SYSTEM LOGIC', 'Desirable enough to matter. Structured enough to scale.'],
       ['02', 'EMERGING TECH', 'EVERYDAY BEHAVIOR', 'Advanced beneath the surface. Obvious in the hand.'],
@@ -188,6 +191,8 @@ const ar: Content = {
     index: 'التوترات التي أفكر من خلالها',
     balance: 'التوازن يصنع الاتجاه',
     meets: 'يلتقي',
+    balanceL: 'توازن',
+    pos: [0.42, 0.58, 0.5],
     tensions: [
       ['01', 'احتياجات الإنسان', 'منطق النظام', 'مرغوب بما يكفي ليُحدث فرقاً. منظّم بما يكفي ليكبر.'],
       ['02', 'تقنية ناشئة', 'سلوك يومي', 'متقدّم تحت السطح. بديهي في اليد.'],

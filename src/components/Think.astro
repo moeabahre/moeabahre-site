@@ -12,15 +12,21 @@ const H = page ? 'h1' : 'h2';
     <H id="th-h" data-rv><span>{c.think.head[0]}</span><span class="g">{c.think.head[1]}</span></H>
     <p data-rv>{c.think.intro}</p>
   </div>
-  <div class="think-idx" data-rv><span>{c.think.index}</span><span>{c.think.balance}</span></div>
   <ol class="tensions">
-    {c.think.tensions.map(([n, a, b, d], i) => (
-      <li class:list={['tn', { inv: i === 1 }]} data-rv>
-        <span class="tn-n">{n}</span>
-        <div class="tn-row"><b>{a}</b><span class="meets">{c.think.meets}</span><b class="tn-b">{b}</b></div>
-        <p>{d}</p>
-      </li>
-    ))}
+    {c.think.tensions.map(([n, a, b, d], i) => {
+      // each description is two sentences: the first belongs to the first truth, the second to the other
+      const [da, ...rest] = d.split(/(?<=\.)\s+/);
+      return (
+        <li class="bl" style={`--pos:${c.think.pos[i]}`} data-rv>
+          <span class="bl-n">{n}</span>
+          <b class="bl-a">{a}</b>
+          <b class="bl-b">{b}</b>
+          <span class="bl-s" aria-hidden="true"><i class="bl-pt"><em>{c.think.balanceL}</em></i></span>
+          <p class="bl-da">{da}</p>
+          <p class="bl-db">{rest.join(' ')}</p>
+        </li>
+      );
+    })}
   </ol>
   <div class="practice" data-rv><span>{c.think.practiceL}</span><p>{c.think.practice}</p><span>{c.think.mark}</span></div>
   {page && (
