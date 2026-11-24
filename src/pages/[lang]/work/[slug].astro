@@ -20,11 +20,11 @@ const latin = /^[\x00-\x7F\s]+$/.test(k.title.join(''));
 ---
 <Base lang={lang} title={`${k.title.join(' ')} · ${c.hero.name}`} description={k.desc} path={`work/${k.slug}/`}>
   <a class="skip" href="#main">{lang === 'ar' ? 'انتقل للمحتوى' : 'Skip to content'}</a>
-  <Header lang={lang} base={`/${lang}/`} other={`/${other}/work/${k.slug}/`} />
+  <Header lang={lang} page="work/" path={`work/${k.slug}/`} />
   <main id="main">
     <section class="sec case-hero">
       <div class="sec-top" data-rv>
-        <a href={`/${lang}/#work`} class="back"><span class="ar-ico back-ico" set:html={arrow} />{u.back}</a>
+        <a href={`/${lang}/work/`} class="back"><span class="ar-ico back-ico" set:html={arrow} />{u.back}</a>
         <span class="mute">{u.label} {k.n} / 03</span>
       </div>
       <div class="ch-grid">
@@ -62,6 +62,6 @@ const latin = /^[\x00-\x7F\s]+$/.test(k.title.join(''));
     </section>
     <Cta lang={lang} />
   </main>
-  <Footer lang={lang} base={`/${lang}/`} />
+  <Footer lang={lang} />
   <script>import '../../../scripts/main.ts';</script>
 </Base>

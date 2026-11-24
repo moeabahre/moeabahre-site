@@ -1,21 +1,31 @@
 ---
-import logo from '../assets/full-logo.svg?raw';
 import { content, EMAIL, LINKEDIN, CV, ARROW as arrow, type Lang } from '../i18n/content';
-interface Props { lang: Lang; base?: string; other?: string }
-const { lang, base = '', other: otherHref } = Astro.props;
+/* page: render as the contact page (h1, room for the header, contact details) */
+interface Props { lang: Lang; page?: boolean }
+const { lang, page = false } = Astro.props;
 const c = content[lang];
-const other: Lang = lang === 'en' ? 'ar' : 'en';
+const p = c.pages.contact;
+const H = page ? 'h1' : 'h2';
 ---
-<section class="sec cta" id="contact" aria-labelledby="ct-h">
+<section class:list={['sec cta', { first: page }]} id="contact" aria-labelledby="ct-h">
   <div class="sec-top" data-rv><span>{c.cta.label}</span><span class="mute">{c.cta.note}</span></div>
   <div class="cta-top">
-    <h2 id="ct-h"><span class="w" data-line>{c.cta.head[0]}</span><span class="g" data-line>{c.cta.head[1]}</span><span class="g" data-line>{c.cta.head[2]}</span></h2>
+    <H id="ct-h"><span class="w" data-line>{c.cta.head[0]}</span><span class="g" data-line>{c.cta.head[1]}</span><span class="g" data-line>{c.cta.head[2]}</span></H>
     <p data-rv>{c.cta.body}</p>
   </div>
   <a class="convo" href={`mailto:${EMAIL}`} data-rv>
     <span><i>{c.cta.btnEyebrow}</i><b>{c.cta.btn}</b></span>
     <span class="ar-ico" set:html={arrow} />
   </a>
+  {page && (
+    <dl class="ct-details" data-rv>
+      <div><dt>{p.email}</dt><dd><a href={`mailto:${EMAIL}`} dir="ltr">{EMAIL}</a></dd></div>
+      <div><dt>{p.linkedin}</dt><dd><a href={LINKEDIN} target="_blank" rel="noopener" dir="ltr">/in/moeabahre ↗</a></dd></div>
+      <div><dt>{p.cv}</dt><dd><a href={CV} download>{c.header.cv} ↓</a></dd></div>
+      <div><dt>{p.based}</dt><dd>{c.footer.location}</dd></div>
+      <div><dt>{p.availability}</dt><dd><i class="dot"></i>{c.header.available}</dd></div>
+    </dl>
+  )}
   <div class="cta-low" data-rv><span>{c.cta.services}</span><a href={`mailto:${EMAIL}`} dir="ltr">{EMAIL.toUpperCase()}</a></div>
   <p class="cta-close">{c.cta.closing}</p>
 </section>

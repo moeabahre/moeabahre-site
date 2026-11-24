@@ -1,0 +1,44 @@
+---
+import { content, ARROW as arrow, type Lang } from '../i18n/content';
+/* page: render as the About page (h1, room for the header, no "more about me" link) */
+interface Props { lang: Lang; page?: boolean }
+const { lang, page = false } = Astro.props;
+const c = content[lang];
+const H = page ? 'h1' : 'h2';
+---
+<section class:list={['sec about', { first: page }]} id="about" aria-labelledby="ab-h">
+  <div class="sec-top" data-rv><span>{c.about.label}</span><span class="mute">{c.about.note}</span></div>
+  <div class="about-grid">
+    <H class="about-lead" id="ab-h" data-rv>{c.about.lead.map(([t, b]) => (b ? <strong>{t}</strong> : t))}</H>
+    <div class="about-intro" data-rv>
+      <p class="about-p1">{c.about.intro}</p>
+      <p class="about-p2">{c.about.body}</p>
+    </div>
+  </div>
+  <div class="triad" data-rv><span>{c.about.triad}</span><i></i></div>
+  <div class="about-grid about-low">
+    <div class="evo" data-rv>
+      <svg class="star" viewBox="0 0 370 370" aria-hidden="true"><path d="M212.711 0H157.197V370H212.711V0Z"/><path d="M370 157.197H0V212.711H370V157.197Z"/><path d="M296.175 34.4791L34.5458 296.109L73.8 335.363L335.43 73.7334L296.175 34.4791Z"/><path d="M73.8 34.5446L34.5458 73.7988L296.175 335.428L335.43 296.174L73.8 34.5446Z"/></svg>
+      <div class="evo-head">
+        <p>{c.about.evo[0]}<br />{c.about.evo[1]}</p>
+        <div class="badge"><b dir="ltr">{c.about.years}</b><span><i>{c.about.yearsLabel}</i><i>{c.about.yearsRange}</i></span></div>
+      </div>
+      <ol class="tl">
+        {c.about.timeline.map((m) => (
+          <li class:list={[m.pos, { now: m.now }]}>
+            <span class="tl-y">{m.year}</span>
+            <b>{m.title.map((t, i) => <>{i > 0 && <br />}{t}</>)}</b>
+            <span class="tl-s">{m.sub}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="today"><span>{c.about.today}</span><b>{c.about.todayRole}</b><span>{c.about.todayNote}</span></div>
+    </div>
+    <div class="pillars">
+      {c.about.pillars.map(([n, t, d]) => (
+        <div class="pillar" data-rv><span class="pn">{n}</span><b>{t}</b><p>{d}</p></div>
+      ))}
+      <a class="more" href={page ? `/${lang}/work/` : `/${lang}/about/`} data-rv><span>{page ? c.pages.work.all : c.about.more}</span><span class="ar-ico" set:html={arrow} /></a>
+    </div>
+  </div>
+</section>

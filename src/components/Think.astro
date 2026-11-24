@@ -1,0 +1,37 @@
+---
+import { content, type Lang } from '../i18n/content';
+/* page: render as the Expertise page (h1, room for the header, plus the three practices) */
+interface Props { lang: Lang; page?: boolean }
+const { lang, page = false } = Astro.props;
+const c = content[lang];
+const H = page ? 'h1' : 'h2';
+---
+<section class:list={['sec think', { first: page }]} id="expertise" aria-labelledby="th-h">
+  <div class="sec-top dark-rule" data-rv><span>{c.think.label}</span><span class="mute">{c.think.note}</span></div>
+  <div class="think-top">
+    <H id="th-h" data-rv><span>{c.think.head[0]}</span><span class="g">{c.think.head[1]}</span></H>
+    <p data-rv>{c.think.intro}</p>
+  </div>
+  <div class="think-idx" data-rv><span>{c.think.index}</span><span>{c.think.balance}</span></div>
+  <ol class="tensions">
+    {c.think.tensions.map(([n, a, b, d], i) => (
+      <li class:list={['tn', { inv: i === 1 }]} data-rv>
+        <span class="tn-n">{n}</span>
+        <div class="tn-row"><b>{a}</b><span class="meets">{c.think.meets}</span><b class="tn-b">{b}</b></div>
+        <p>{d}</p>
+      </li>
+    ))}
+  </ol>
+  <div class="practice" data-rv><span>{c.think.practiceL}</span><p>{c.think.practice}</p><span>{c.think.mark}</span></div>
+  {page && (
+    <>
+      <div class="think-idx caps-top" data-rv><span>{c.pages.expertise.capsLabel}</span><span>{c.pages.expertise.capsNote}</span></div>
+      <ol class="caps">
+        {c.about.pillars.map(([n, t, d]) => (
+          <li data-rv><span>{n}</span><b>{t}</b><p>{d}</p></li>
+        ))}
+      </ol>
+      <p class="caps-svc" data-rv>{c.cta.services}</p>
+    </>
+  )}
+</section>

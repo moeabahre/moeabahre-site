@@ -1,8 +1,9 @@
 ---
 import logo from '../assets/full-logo.svg?raw';
 import { content, EMAIL, LINKEDIN, CV, ARROW as arrow, type Lang } from '../i18n/content';
-interface Props { lang: Lang; base?: string; other?: string }
-const { lang, base = '', other: otherHref } = Astro.props;
+/* page: the nav entry to mark as current ('' is home); path: this page under /{lang}/, for the language switch */
+interface Props { lang: Lang; page?: string; path?: string }
+const { lang, page = '', path = '' } = Astro.props;
 const c = content[lang];
 const other: Lang = lang === 'en' ? 'ar' : 'en';
 ---
@@ -13,11 +14,11 @@ const other: Lang = lang === 'en' ? 'ar' : 'en';
   </a>
   <nav class="hdr-nav" id="nav" aria-label={lang === 'ar' ? 'الرئيسية' : 'Main'}>
     {c.header.nav.map(([label, href], i) => (
-      <a href={base + href} class:list={['hdr-link', { on: !base && i === 0 }]}><i>{String(i + 1).padStart(2, '0')}</i><b>{label}</b></a>
+      <a href={`/${lang}/${href}`} class:list={['hdr-link', { on: page === href }]} aria-current={page === href ? 'page' : undefined}><i>{String(i + 1).padStart(2, '0')}</i><b>{label}</b></a>
     ))}
   </nav>
   <div class="hdr-status">
-    <div class="hdr-loc"><b>{c.header.location}</b><a class="hdr-lang" href={otherHref ?? `/${other}/`} hreflang={other} lang={other}>{c.langSwitch}</a></div>
+    <div class="hdr-loc"><b>{c.header.location}</b><a class="hdr-lang" href={`/${other}/${path}`} hreflang={other} lang={other}>{c.langSwitch}</a></div>
     <span class="hdr-av"><i class="dot"></i>{c.header.available}</span>
   </div>
   <a class="hdr-cv" href={CV} download>

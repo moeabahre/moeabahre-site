@@ -1,8 +1,8 @@
 ---
 import logo from '../assets/full-logo.svg?raw';
 import { content, EMAIL, LINKEDIN, CV, ARROW as arrow, type Lang } from '../i18n/content';
-interface Props { lang: Lang; base?: string; other?: string }
-const { lang, base = '', other: otherHref } = Astro.props;
+interface Props { lang: Lang }
+const { lang } = Astro.props;
 const c = content[lang];
 const other: Lang = lang === 'en' ? 'ar' : 'en';
 ---
@@ -12,7 +12,7 @@ const other: Lang = lang === 'en' ? 'ar' : 'en';
       <span class="logo" set:html={logo} />
       <p>{c.footer.pos[0]}<br />{c.footer.pos[1]}</p>
     </div>
-    <div class="ftr-col"><i>{c.footer.explore}</i>{c.footer.links.map(([l, h]) => <a href={base + h}>{l}</a>)}</div>
+    <div class="ftr-col"><i>{c.footer.explore}</i>{c.footer.links.map(([l, h]) => <a href={`/${lang}/${h}`}>{l}</a>)}</div>
     <div class="ftr-col"><i>{c.footer.connect}</i>
       <a href={`mailto:${EMAIL}`}>{c.footer.email} ↗</a>
       <a href={LINKEDIN} target="_blank" rel="noopener">{c.footer.linkedin} ↗</a>

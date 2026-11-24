@@ -10,7 +10,8 @@ const en = {
   langSwitch: 'عربي',
   header: {
     meta: 'HUMAN × AI  /  PORTFOLIO 2026',
-    nav: [['HOME', '#home'], ['WORK', '#work'], ['EXPERTISE', '#expertise'], ['ABOUT', '#about'], ['CONTACT', '#contact']],
+    // [label, path under /{lang}/]
+    nav: [['HOME', ''], ['WORK', 'work/'], ['EXPERTISE', 'expertise/'], ['ABOUT', 'about/'], ['CONTACT', 'contact/']],
     location: 'DUBAI / UAE',
     available: 'AVAILABLE FOR SELECTED WORK',
     cvEyebrow: 'PROFILE / PDF',
@@ -97,7 +98,7 @@ const en = {
   footer: {
     pos: ['SENIOR AI PRODUCT DESIGNER', 'HUMAN–AI INTERACTION'],
     explore: 'EXPLORE',
-    links: [['HOME', '#home'], ['ABOUT', '#about'], ['SELECTED WORK', '#work'], ['HOW I THINK', '#expertise']],
+    links: [['HOME', ''], ['ABOUT', 'about/'], ['SELECTED WORK', 'work/'], ['EXPERTISE', 'expertise/'], ['CONTACT', 'contact/']],
     connect: 'CONNECT',
     email: 'EMAIL', linkedin: 'LINKEDIN', cv: 'DOWNLOAD CV',
     based: 'BASED IN', location: 'DUBAI / UAE',
@@ -105,6 +106,12 @@ const en = {
     copy: '© 2026 MOHAMMAD ABAHRE',
     craft: 'DESIGNED WITH CLARITY. BUILT WITH INTENT.',
     top: 'BACK TO TOP',
+  },
+  pages: {
+    work: { title: 'Selected work', all: 'VIEW ALL WORK' },
+    expertise: { title: 'Expertise', capsLabel: 'WHAT I BRING', capsNote: 'THREE PRACTICES / ONE LENS' },
+    about: { title: 'About' },
+    contact: { title: 'Contact', email: 'EMAIL', linkedin: 'LINKEDIN', cv: 'CV / PDF', based: 'BASED IN', availability: 'AVAILABILITY' },
   },
 };
 
@@ -117,7 +124,7 @@ const ar: Content = {
   langSwitch: 'EN',
   header: {
     meta: 'إنسان × ذكاء اصطناعي  /  أعمال 2026',
-    nav: [['الرئيسية', '#home'], ['الأعمال', '#work'], ['الخبرة', '#expertise'], ['عنّي', '#about'], ['تواصل', '#contact']],
+    nav: [['الرئيسية', ''], ['الأعمال', 'work/'], ['الخبرة', 'expertise/'], ['عنّي', 'about/'], ['تواصل', 'contact/']],
     location: 'دبي / الإمارات',
     available: 'متاح لمشاريع مختارة',
     cvEyebrow: 'السيرة / PDF',
@@ -203,7 +210,7 @@ const ar: Content = {
   footer: {
     pos: ['مصمم منتجات ذكاء اصطناعي أول', 'تفاعل الإنسان والذكاء الاصطناعي'],
     explore: 'استكشف',
-    links: [['الرئيسية', '#home'], ['عنّي', '#about'], ['أعمال مختارة', '#work'], ['كيف أفكر', '#expertise']],
+    links: [['الرئيسية', ''], ['عنّي', 'about/'], ['أعمال مختارة', 'work/'], ['الخبرة', 'expertise/'], ['تواصل', 'contact/']],
     connect: 'تواصل',
     email: 'الإيميل', linkedin: 'لينكدإن', cv: 'حمّل السيرة',
     based: 'مقيم في', location: 'دبي / الإمارات',
@@ -211,6 +218,12 @@ const ar: Content = {
     copy: '© 2026 محمد عباهرة',
     craft: 'مصمم بوضوح. مبني بنيّة.',
     top: 'للأعلى',
+  },
+  pages: {
+    work: { title: 'أعمال مختارة', all: 'شوف كل الأعمال' },
+    expertise: { title: 'الخبرة', capsLabel: 'شو بقدّم', capsNote: 'ثلاث ممارسات / عدسة وحدة' },
+    about: { title: 'عنّي' },
+    contact: { title: 'تواصل', email: 'الإيميل', linkedin: 'لينكدإن', cv: 'السيرة / PDF', based: 'مقيم في', availability: 'التوفر' },
   },
 };
 

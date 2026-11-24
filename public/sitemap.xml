@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://moeabahre.com/en/</loc></url>
-  <url><loc>https://moeabahre.com/ar/</loc></url>
+  <url><loc>https://moeabahre.com/en/work/</loc></url>
+  <url><loc>https://moeabahre.com/en/expertise/</loc></url>
+  <url><loc>https://moeabahre.com/en/about/</loc></url>
+  <url><loc>https://moeabahre.com/en/contact/</loc></url>
   <url><loc>https://moeabahre.com/en/work/microsoft-copilot/</loc></url>
   <url><loc>https://moeabahre.com/en/work/dubai-police/</loc></url>
   <url><loc>https://moeabahre.com/en/work/dpds-design-system/</loc></url>
+  <url><loc>https://moeabahre.com/ar/</loc></url>
+  <url><loc>https://moeabahre.com/ar/work/</loc></url>
+  <url><loc>https://moeabahre.com/ar/expertise/</loc></url>
+  <url><loc>https://moeabahre.com/ar/about/</loc></url>
+  <url><loc>https://moeabahre.com/ar/contact/</loc></url>
   <url><loc>https://moeabahre.com/ar/work/microsoft-copilot/</loc></url>
   <url><loc>https://moeabahre.com/ar/work/dubai-police/</loc></url>
   <url><loc>https://moeabahre.com/ar/work/dpds-design-system/</loc></url>

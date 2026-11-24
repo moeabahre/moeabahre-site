@@ -1,20 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
+import About from '../../components/About.astro';
+import Work from '../../components/Work.astro';
+import Think from '../../components/Think.astro';
 import Cta from '../../components/Cta.astro';
 import Footer from '../../components/Footer.astro';
-import { content, cases, langs, ARROW as arrow, type Lang } from '../../i18n/content';
+import { content, langs, ARROW as arrow, type Lang } from '../../i18n/content';
 export function getStaticPaths() { return langs.map((lang) => ({ params: { lang } })); }
 const lang = Astro.params.lang as Lang;
 const c = content[lang];
 ---
 <Base lang={lang}>
   <a class="skip" href="#main">{lang === 'ar' ? 'انتقل للمحتوى' : 'Skip to content'}</a>
-
-  <!-- 01 HERO ----------------------------------------------------------- -->
   <Header lang={lang} />
 
   <main id="main">
+    <!-- 01 HERO -->
     <section class="hero" id="home" aria-label={c.hero.name}>
       <img class="hero-grid" src="/img/hero-grid.svg" alt="" aria-hidden="true" />
       <span class="hatch hatch-l" aria-hidden="true"></span>
@@ -24,106 +26,15 @@ const c = content[lang];
       <h1 class="hero-name" data-in data-fit><span>{c.hero.name}</span></h1>
       <div class="hero-role" data-in>
         <p>{c.hero.role[0]}<br />{c.hero.role[1]}</p>
-        <a class="cta-dark" href="#contact"><span><i>{c.hero.ctaEyebrow}</i><b>{c.hero.cta}</b></span><span class="sq" set:html={arrow} /></a>
+        <a class="cta-dark" href={`/${lang}/contact/`}><span><i>{c.hero.ctaEyebrow}</i><b>{c.hero.cta}</b></span><span class="sq" set:html={arrow} /></a>
       </div>
       <p class="hero-pitch" data-in>{c.hero.pitch}</p>
     </section>
 
-    <!-- 02 ABOUT --------------------------------------------------------- -->
-    <section class="sec about" id="about" aria-labelledby="ab-h">
-      <div class="sec-top" data-rv><span>{c.about.label}</span><span class="mute">{c.about.note}</span></div>
-      <div class="about-grid">
-        <h2 class="about-lead" id="ab-h" data-rv>{c.about.lead.map(([t, b]) => (b ? <strong>{t}</strong> : t))}</h2>
-        <div class="about-intro" data-rv>
-          <p class="about-p1">{c.about.intro}</p>
-          <p class="about-p2">{c.about.body}</p>
-        </div>
-      </div>
-      <div class="triad" data-rv><span>{c.about.triad}</span><i></i></div>
-      <div class="about-grid about-low">
-        <div class="evo" data-rv>
-          <svg class="star" viewBox="0 0 370 370" aria-hidden="true"><path d="M212.711 0H157.197V370H212.711V0Z"/><path d="M370 157.197H0V212.711H370V157.197Z"/><path d="M296.175 34.4791L34.5458 296.109L73.8 335.363L335.43 73.7334L296.175 34.4791Z"/><path d="M73.8 34.5446L34.5458 73.7988L296.175 335.428L335.43 296.174L73.8 34.5446Z"/></svg>
-          <div class="evo-head">
-            <p>{c.about.evo[0]}<br />{c.about.evo[1]}</p>
-            <div class="badge"><b dir="ltr">{c.about.years}</b><span><i>{c.about.yearsLabel}</i><i>{c.about.yearsRange}</i></span></div>
-          </div>
-          <ol class="tl">
-            {c.about.timeline.map((m) => (
-              <li class:list={[m.pos, { now: m.now }]}>
-                <span class="tl-y">{m.year}</span>
-                <b>{m.title.map((t, i) => <>{i > 0 && <br />}{t}</>)}</b>
-                <span class="tl-s">{m.sub}</span>
-              </li>
-            ))}
-          </ol>
-          <div class="today"><span>{c.about.today}</span><b>{c.about.todayRole}</b><span>{c.about.todayNote}</span></div>
-        </div>
-        <div class="pillars">
-          {c.about.pillars.map(([n, t, d]) => (
-            <div class="pillar" data-rv><span class="pn">{n}</span><b>{t}</b><p>{d}</p></div>
-          ))}
-          <a class="more" href="#expertise" data-rv><span>{c.about.more}</span><span class="ar-ico" set:html={arrow} /></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 WORK ---------------------------------------------------------- -->
-    <section class="sec work" id="work" aria-labelledby="wk-h">
-      <div class="sec-top" data-rv><span>{c.work.label}</span><span class="mute">{c.work.note}</span></div>
-      <div class="work-top">
-        <div>
-          <h2 class="mast" id="wk-h" data-rv><span>{c.work.mast[0]}</span><span>{c.work.mast[1]}</span></h2>
-          <p class="work-intro" data-rv>{c.work.intro}</p>
-        </div>
-        <a class="case" href={`/${lang}/work/${cases[lang][0].slug}/`} data-rv>
-          <span class="case-n" aria-hidden="true">{c.work.feature.n}</span>
-          <h3 dir="ltr">{c.work.feature.title[0]}<br />{c.work.feature.title[1]}</h3>
-          <p class="kick">{c.work.feature.kicker}</p>
-          <p class="case-d">{c.work.feature.desc}</p>
-          <div class="case-meta">
-            <span><i>{c.work.feature.roleL}</i><b>{c.work.feature.role}</b></span>
-            <span><i>{c.work.feature.focusL}</i><b>{c.work.feature.focus}</b></span>
-          </div>
-          <p class="case-y">{c.work.feature.years}</p>
-        </a>
-      </div>
-      <div class="idx-top" data-rv><span>{c.work.moreLabel}</span><span class="mute">{c.work.moreCount}</span></div>
-      <ul class="idx">
-        {c.work.rows.map((r, i) => (
-          <li class:list={['row', { alt: i % 2 === 1 }]} data-rv>
-            <a href={`/${lang}/work/${cases[lang][i + 1].slug}/`}>
-              <span class="row-n">{r.n}</span>
-              <h3 class="row-t">{r.title[0]}<br />{r.title[1]}</h3>
-              <span class="row-m"><i>{r.type}</i><span>{r.desc}</span></span>
-              <span class="row-r"><i>{r.role}</i><b>{r.years}</b></span>
-              <span class="row-go" set:html={arrow} />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <!-- 04 HOW I THINK ---------------------------------------------------- -->
-    <section class="sec think" id="expertise" aria-labelledby="th-h">
-      <div class="sec-top dark-rule" data-rv><span>{c.think.label}</span><span class="mute">{c.think.note}</span></div>
-      <div class="think-top">
-        <h2 id="th-h" data-rv><span>{c.think.head[0]}</span><span class="g">{c.think.head[1]}</span></h2>
-        <p data-rv>{c.think.intro}</p>
-      </div>
-      <div class="think-idx" data-rv><span>{c.think.index}</span><span>{c.think.balance}</span></div>
-      <ol class="tensions">
-        {c.think.tensions.map(([n, a, b, d], i) => (
-          <li class:list={['tn', { inv: i === 1 }]} data-rv>
-            <span class="tn-n">{n}</span>
-            <div class="tn-row"><b>{a}</b><span class="meets">{c.think.meets}</span><b class="tn-b">{b}</b></div>
-            <p>{d}</p>
-          </li>
-        ))}
-      </ol>
-      <div class="practice" data-rv><span>{c.think.practiceL}</span><p>{c.think.practice}</p><span>{c.think.mark}</span></div>
-    </section>
-
-    <!-- 05 CTA ----------------------------------------------------------- -->
+    <!-- 02–05 a short version of each page, each one leads to its own page -->
+    <About lang={lang} />
+    <Work lang={lang} />
+    <Think lang={lang} />
     <Cta lang={lang} />
   </main>
 

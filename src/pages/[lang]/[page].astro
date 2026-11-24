@@ -1,0 +1,36 @@
+---
+/* The inner pages: Work, Expertise, About, Contact. Each one is the matching home section
+   at full length, opened as its own page. */
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import About from '../../components/About.astro';
+import Work from '../../components/Work.astro';
+import Think from '../../components/Think.astro';
+import Cta from '../../components/Cta.astro';
+import Footer from '../../components/Footer.astro';
+import { content, langs, type Lang } from '../../i18n/content';
+
+type Page = 'work' | 'expertise' | 'about' | 'contact';
+export function getStaticPaths() {
+  const pages: Page[] = ['work', 'expertise', 'about', 'contact'];
+  return langs.flatMap((lang) => pages.map((page) => ({ params: { lang, page } })));
+}
+const lang = Astro.params.lang as Lang;
+const page = Astro.params.page as Page;
+const c = content[lang];
+const path = `${page}/`;
+const desc: Record<Page, string> = { work: c.work.intro, expertise: c.think.intro, about: c.about.intro, contact: c.cta.body };
+---
+<Base lang={lang} title={`${c.pages[page].title} · ${c.hero.name}`} description={desc[page]} path={path}>
+  <a class="skip" href="#main">{lang === 'ar' ? 'انتقل للمحتوى' : 'Skip to content'}</a>
+  <Header lang={lang} page={path} path={path} />
+  <main id="main" class="inner">
+    {page === 'work' && <Work lang={lang} page />}
+    {page === 'expertise' && <Think lang={lang} page />}
+    {page === 'about' && <About lang={lang} page />}
+    {page === 'contact' && <Cta lang={lang} page />}
+    {page !== 'contact' && <Cta lang={lang} />}
+  </main>
+  <Footer lang={lang} />
+  <script>import '../../scripts/main.ts';</script>
+</Base>
