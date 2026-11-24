@@ -16,9 +16,12 @@ function setUnit() {
     const u = Math.min(root.clientWidth / 1440, 1.2);
     root.style.setProperty('--u', `${u}px`);
     root.style.setProperty('--gut', `${Math.max(0, (root.clientWidth - 1440 * u) / 2)}px`);
+    // the hero (1000 tall in Figma) and the header over it must fit the window height too
+    const hu = Math.min(u, root.clientHeight / 1000);
+    root.style.setProperty('--hu', `${hu}px`);
+    root.style.setProperty('--hgut', `${Math.max(0, (root.clientWidth - 1440 * hu) / 2)}px`);
   } else {
-    root.style.removeProperty('--u');
-    root.style.removeProperty('--gut');
+    ['--u', '--gut', '--hu', '--hgut'].forEach((p) => root.style.removeProperty(p));
   }
 }
 /* the oversized words must span exactly the width they have in Figma, whatever font ends up loading */
