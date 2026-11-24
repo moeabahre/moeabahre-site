@@ -3,3 +3,6 @@ dist/
 .astro/
 .DS_Store
 .env
+
+# Lama Sans is licensed; keep it out of the public repo until the repo is private
+public/fonts/

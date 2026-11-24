@@ -1,13 +1,21 @@
-/* Lama Sans is the typeface of the Figma design. It is a licensed font, so it is not in the repo yet.
-   These faces use the copy installed on the visitor's machine (local()). When the web font files are
-   licensed and added to /public/fonts/, add url('/fonts/<file>.woff2') after each local(). Otherwise they fall back to Archivo (Latin) and Alexandria (Arabic),
-   set to the closest width with font-stretch. */
-@font-face { font-family: 'LS Cond'; font-weight: 700; font-display: swap; src: local('Lama Sans Bold Condensed'), local('LamaSans-BoldCondensed'); }
-@font-face { font-family: 'LS Cond'; font-weight: 900; font-display: swap; src: local('Lama Sans Black Condensed'), local('LamaSans-BlackCondensed'); }
-@font-face { font-family: 'LS Cond'; font-weight: 500; font-display: swap; src: local('Lama Sans Medium Condensed'), local('LamaSans-MediumCondensed'); }
-@font-face { font-family: 'LS Exp'; font-weight: 500; font-display: swap; src: local('Lama Sans Medium Expanded'), local('LamaSans-MediumExpanded'); }
-@font-face { font-family: 'LS Exp'; font-weight: 800; font-display: swap; src: local('Lama Sans ExtraBold Expanded'), local('LamaSans-ExtraBoldExpanded'); }
-@font-face { font-family: 'LS'; font-weight: 400; font-display: swap; src: local('Lama Sans Regular'), local('LamaSans-Regular'); }
-@font-face { font-family: 'LS'; font-weight: 500; font-display: swap; src: local('Lama Sans Medium'), local('LamaSans-Medium'); }
-@font-face { font-family: 'LS'; font-weight: 700; font-display: swap; src: local('Lama Sans Bold'), local('LamaSans-Bold'); }
-@font-face { font-family: 'LS'; font-weight: 900; font-display: swap; src: local('Lama Sans Black'), local('LamaSans-Black'); }
+/* Lama Sans, the typeface of the Figma design (web files supplied by Moe, in /public/fonts/).
+   Three families: 'LS' (standard), 'LS Cond' (condensed) and 'LS Exp' (expanded). A face uses the copy
+   installed on the visitor's machine first, then the web file. Archivo / Alexandria remain as fallbacks. */
+@font-face { font-family: 'LS'; font-weight: 400; font-display: swap; src: local('LamaSans-Regular'), url('/fonts/LamaSans-Regular.woff2') format('woff2'); }
+@font-face { font-family: 'LS'; font-weight: 500; font-display: swap; src: local('LamaSans-Medium'), url('/fonts/LamaSans-Medium.woff2') format('woff2'); }
+@font-face { font-family: 'LS'; font-weight: 600; font-display: swap; src: local('LamaSans-SemiBold'), url('/fonts/LamaSans-SemiBold.woff2') format('woff2'); }
+@font-face { font-family: 'LS'; font-weight: 700; font-display: swap; src: local('LamaSans-Bold'), url('/fonts/LamaSans-Bold.woff2') format('woff2'); }
+@font-face { font-family: 'LS'; font-weight: 800; font-display: swap; src: local('LamaSans-ExtraBold'), url('/fonts/LamaSans-ExtraBold.woff2') format('woff2'); }
+@font-face { font-family: 'LS'; font-weight: 900; font-display: swap; src: local('LamaSans-Black'), url('/fonts/LamaSans-Black.woff2') format('woff2'); }
+@font-face { font-family: 'LS Cond'; font-weight: 400; font-display: swap; src: local('LamaSans-RegularCondensed'), url('/fonts/LamaSans-RegularCondensed.woff2') format('woff2'); }
+@font-face { font-family: 'LS Cond'; font-weight: 500; font-display: swap; src: local('LamaSans-MediumCondensed'), url('/fonts/LamaSans-MediumCondensed.woff2') format('woff2'); }
+@font-face { font-family: 'LS Cond'; font-weight: 600; font-display: swap; src: local('LamaSans-SemiBoldCondensed'), url('/fonts/LamaSans-SemiBoldCondensed.woff2') format('woff2'); }
+@font-face { font-family: 'LS Cond'; font-weight: 700; font-display: swap; src: local('LamaSans-BoldCondensed'), url('/fonts/LamaSans-BoldCondensed.woff2') format('woff2'); }
+@font-face { font-family: 'LS Cond'; font-weight: 800; font-display: swap; src: local('LamaSans-ExtraBoldCondensed'), url('/fonts/LamaSans-ExtraBoldCondensed.woff2') format('woff2'); }
+@font-face { font-family: 'LS Cond'; font-weight: 900; font-display: swap; src: local('LamaSans-BlackCondensed'), url('/fonts/LamaSans-BlackCondensed.woff2') format('woff2'); }
+@font-face { font-family: 'LS Exp'; font-weight: 400; font-display: swap; src: local('LamaSans-RegularExpanded'), url('/fonts/LamaSans-RegularExpanded.woff2') format('woff2'); }
+@font-face { font-family: 'LS Exp'; font-weight: 500; font-display: swap; src: local('LamaSans-MediumExpanded'), url('/fonts/LamaSans-MediumExpanded.woff2') format('woff2'); }
+@font-face { font-family: 'LS Exp'; font-weight: 600; font-display: swap; src: local('LamaSans-SemiBoldExpanded'), url('/fonts/LamaSans-SemiBoldExpanded.woff2') format('woff2'); }
+@font-face { font-family: 'LS Exp'; font-weight: 700; font-display: swap; src: local('LamaSans-BoldExpanded'), url('/fonts/LamaSans-BoldExpanded.woff2') format('woff2'); }
+@font-face { font-family: 'LS Exp'; font-weight: 800; font-display: swap; src: local('LamaSans-ExtraBoldExpanded'), url('/fonts/LamaSans-ExtraBoldExpanded.woff2') format('woff2'); }
+@font-face { font-family: 'LS Exp'; font-weight: 900; font-display: swap; src: local('LamaSans-BlackExpanded'), url('/fonts/LamaSans-BlackExpanded.woff2') format('woff2'); }

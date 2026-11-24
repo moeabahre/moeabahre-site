@@ -24,9 +24,9 @@ The design source is the Figma file "Moe Ali Web Site V26" (page "Home Page UI")
 
 ## Fonts
 
-The design uses Lama Sans (licensed). `src/styles/fonts.css` uses the copy installed on the machine first,
-and otherwise falls back to Archivo and Alexandria. To serve it to every visitor, add the licensed woff2 files to
-`public/fonts/` and add a `url('/fonts/<file>.woff2')` source after each `local()` in that file.
+The design uses Lama Sans (licensed). `src/styles/fonts.css` loads it from `public/fonts/` (woff2, Regular to Black,
+in Standard, Condensed and Expanded), after any copy installed on the machine, with Archivo and Alexandria as fallbacks.
+The font files are git-ignored while this repository is public; copy them into `public/fonts/` before building.
 
 ## Still needed
 

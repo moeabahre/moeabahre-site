@@ -24,6 +24,8 @@ const pageDesc = description ?? c.description;
   <link rel="alternate" hreflang={lang} href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   {!path && <link rel="preload" as="image" href="/img/portrait.webp" />}
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/LamaSans-BoldCondensed.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/LamaSans-ExtraBoldExpanded.woff2" crossorigin />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDesc} />
   <meta property="og:url" content={canonical} />
